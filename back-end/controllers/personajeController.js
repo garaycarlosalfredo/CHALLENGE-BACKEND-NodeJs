@@ -58,7 +58,7 @@ exports.obtenerPersonajes = async(req,res) => {
 }
 
 
-//Actualizar un proyect
+//Actualizar un personaje
 exports.actualizarPersonaje = async(req,res) => {
     //revisar si hay errores
     const errores = validationResult(req)
@@ -66,7 +66,7 @@ exports.actualizarPersonaje = async(req,res) => {
         return res.status(400).json({errores: errores.array()})
     }
 
-    //extraer la información del proyecto
+    //extraer la información del personaje
     const {imagen,nombre,edad,peso,historia,peliserieAsociada} = req.body
     const nuevoPersonaje = {}
 

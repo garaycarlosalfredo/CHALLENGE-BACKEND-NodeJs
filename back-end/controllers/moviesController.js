@@ -41,7 +41,7 @@ exports.crearMovie = async(req,res)=>{
     }
 }
 
-//Obtiene todos los movie
+//Obtiener todas las peliculas
 exports.obtenerMovies = async(req,res) => {
     try {
         if(req.query.name){
@@ -58,7 +58,6 @@ exports.obtenerMovies = async(req,res) => {
                     res.json({movie})
                 }
                 
-               //res.json({"Banca": req.query.order})
             }else{
                 if(req.query.genre){     
                     try {                                               
@@ -130,7 +129,7 @@ exports.actualizarMovie = async(req,res) => {
 
         //si exite el personaje
         if(!movie){
-            return res.status(404).json({msg: 'personaje no encontrado'})
+            return res.status(404).json({msg: 'pelicula/serie no encontrado'})
         }
              
         //Actualizar
@@ -147,7 +146,7 @@ exports.actualizarMovie = async(req,res) => {
 
 }
 
-//Eliminar un personaje
+//Eliminar una pelicula
 exports.eliminarMovie = async (req,res) => {
     
     try {
@@ -160,12 +159,12 @@ exports.eliminarMovie = async (req,res) => {
         }
         
 
-        //Eliminar el movie
+        //Eliminar la pelicula
         await Movie.findOneAndRemove({_id: req.params.id})
         res.json({msg: 'movie eliminado'})
 
     } catch (error) {
-        res.status(500).send('Error en el servidor intentando eliminar el mensaje')
+        res.status(500).send('Error en el servidor intentando eliminar la pelicula')
     }
 
 }

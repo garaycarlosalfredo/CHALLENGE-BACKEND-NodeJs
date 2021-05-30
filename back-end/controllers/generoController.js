@@ -2,6 +2,8 @@ const Movie = require('../models/PeliSerie')
 const Genero = require('../models/Genero')
 const {validationResult} = require('express-validator')
 
+//Crear genero
+
 exports.crearGenero = async(req,res)=>{
     //revisar si hay errores
     const errores = validationResult(req)
@@ -30,11 +32,11 @@ exports.obtenerGenero = async(req,res) => {
         const genero = await Genero.find()
         res.json({genero})      
     } catch (error) {
-        res.status(500).send('Hubo un error Intentando busqueda especifica')
+        res.status(500).send('Hubo un error')
     }
 }
 
-//Actualizar un proyect
+//Actualizar un genero
 exports.actualizarGenero = async(req,res) => {
     //revisar si hay errores
     const errores = validationResult(req)
@@ -42,7 +44,7 @@ exports.actualizarGenero = async(req,res) => {
         return res.status(400).json({errores: errores.array()})
     }
 
-    //extraer la información del proyecto
+    //extraer la información del genero
     const {nombre,imagen,peliserie} = req.body
     const nuevoGenero = {}
 
@@ -62,7 +64,7 @@ exports.actualizarGenero = async(req,res) => {
         //Revisar el id
         let genero = await Genero.findById(req.params.id)
 
-        //si exite el personaje
+        //si exite el genero
         if(!genero){
             return res.status(404).json({msg: 'genero no encontrado'})
         }
@@ -81,14 +83,14 @@ exports.actualizarGenero = async(req,res) => {
 
 }
 
-//Eliminar un personaje
+//Eliminar un genero
 exports.eliminarGenero = async (req,res) => {
     
     try {
         //Revisar el id
         let genero = await Genero.findById(req.params.id)
 
-        //si exite el personaje
+        //si exite el genero
         if(!genero){
             return res.status(404).json({msg: 'genero no encontrado'})
         }
@@ -99,7 +101,7 @@ exports.eliminarGenero = async (req,res) => {
         res.json({msg: 'genero eliminado'})
 
     } catch (error) {
-        res.status(500).send('Error en el servidor intentando eliminar el mensaje')
+        res.status(500).send('Error en el servidor intentando eliminar el genero')
     }
 
 }
