@@ -8,35 +8,38 @@ const {check} = require('express-validator')
 router.post('/',
     auth,
     [
-        check('nombre','El nombre del proyecto es obligatorio').not().isEmpty()
+        check('nombre','El nombre del personaje es obligatorio').not().isEmpty()
     ],
     personajeController.crearPersonaje
 )
 
 
 //Obtiene todos los personajes
-
 router.get('/',
     auth,
     personajeController.obtenerPersonajes
 )
 
-/*
+
 //Actualiza proyecto vía ID
 router.put('/:id',
     auth,
     [
-        check('nombre','El nombre del proyecto es obligatorio').not().isEmpty()
+        check('nombre','El nombre del personaje es obligatorio').not().isEmpty(),
+        check('edad','El nombre del personaje es obligatorio').not().isEmpty(),        
+        check('peso','El nombre del personaje es obligatorio').not().isEmpty(),
+        check('historia','El nombre del personaje es obligatorio').not().isEmpty(),
+        check('imagen','El nombre del personaje es obligatorio').not().isEmpty()
     ],
-    proyectoController.actualizarProyecto
+    personajeController.actualizarPersonaje
 )
 
 //Eliminar un proyecto
 router.delete('/:id',
     auth,
-    proyectoController.eliminarProyecto
+    personajeController.eliminarPersonaje
 )
 
-*/
+
 
 module.exports = router

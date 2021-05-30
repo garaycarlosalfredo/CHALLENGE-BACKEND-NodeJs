@@ -2,6 +2,9 @@ const Usuario = require('../models/Usuario')
 const bcryptjs = require('bcryptjs')
 const {validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
+//===
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 exports.crearUsuario = async(req,res)=>{
     //revisar si hay errores
@@ -30,6 +33,25 @@ exports.crearUsuario = async(req,res)=>{
 
         //guardar usuario
         await usuario.save()
+
+        //Enviar el mail de vienbenida
+        const msg = {
+            to: user.email, // Change to your recipient
+            from: 'verified@email.com', // Acá dbería estar el mail verificado en GridSend
+            subject: 'Bienvenido al challenge de Node js de Alkemy',
+            text: `Hola ${usuaro.nombre} ahora estás listo para poder utilizar la app en Node.js`,
+            html: '<strong> Saludos desde Alkemy </strong>',
+          }
+          
+          sgMail
+            .send(msg)
+            .then((response) => {
+              console.log(response[0].statusCode)
+              console.log(response[0].headers)
+            })
+            .catch((error) => {
+              console.error(error)
+            })
 
         //Crear y firmar el jwt
         const payload = {

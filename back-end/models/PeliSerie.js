@@ -5,10 +5,6 @@ const TareaSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    nombre: {
-        type: String,
-        required: true
-    },
     titulo: {
         type: String,
         required: true

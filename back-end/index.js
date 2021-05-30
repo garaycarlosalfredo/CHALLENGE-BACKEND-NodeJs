@@ -20,11 +20,11 @@ app.get('/', (req,res)=>{
 })
 
 //Importar rutas
-app.use('/auth/register', require('./routes/usuarios'))       //Crear usuario
-app.use('/auth/login', require('./routes/auth'))              //Log-in
-app.use('/characters', require('./routes/personajes'))   //Personajes
-app.use('/api/proyectos', require('./routes/proyectos'))
-app.use('/api/tareas', require('./routes/tareas'))
+app.use('/auth/register', require('./routes/usuarios'))         //Crear usuario
+app.use('/auth/login', require('./routes/auth'))                //Log-in
+app.use('/characters', require('./routes/personajes'))          //Personajes
+app.use('/movies', require('./routes/movies'))                  //Movies
+app.use('/genero', require('./routes/genero'))                  //Genero
 
 //arrancar la app
 app.listen(PORT, ()=>{

@@ -12,8 +12,7 @@ exports.crearPersonaje = async(req,res)=>{
         //Crear Personaje
         const personaje = new Personaje(req.body)
         
-        //Guardar un nuevo proyecto
-        
+        //Guardar un nuevo personaje        
         personaje.save()
         res.json(personaje)
 
@@ -58,18 +57,9 @@ exports.obtenerPersonajes = async(req,res) => {
     }
 }
 
-//Obtiene todos los personajes por edad
-exports.obtenerPersonajes2 = async(req,res) => {
-    try {
-        const personaje = await Personaje.find({edad: req.usuario.id})
-        res.json({personaje})
-    } catch (error) {
-        res.status(500).send('Hubo un error')
-    }
-}
 
 //Actualizar un proyect
-exports.actualizarProyecto = async(req,res) => {
+exports.actualizarPersonaje = async(req,res) => {
     //revisar si hay errores
     const errores = validationResult(req)
     if(!errores.isEmpty()){
@@ -77,33 +67,46 @@ exports.actualizarProyecto = async(req,res) => {
     }
 
     //extraer la información del proyecto
-    const {nombre} = req.body
-    const nuevoProyecto = {}
+    const {imagen,nombre,edad,peso,historia,peliserieAsociada} = req.body
+    const nuevoPersonaje = {}
 
     if(nombre){
-        nuevoProyecto.nombre = nombre
+        nuevoPersonaje.nombre = nombre
+    }
+    if(edad){
+        nuevoPersonaje.edad = edad
+    }
+    if(imagen){
+        nuevoPersonaje.imagen = imagen
+    }
+    if(historia){
+        nuevoPersonaje.historia = historia
+    }
+
+    if(peso){
+        nuevoPersonaje.peso = peso
+    }
+
+    if(peliserieAsociada){
+        nuevoPersonaje.peliserieAsociada = peliserieAsociada
     }
 
     try {
         //Revisar el id
-        let proyecto = await Proyecto.findById(req.params.id)
+        let personaje = await Personaje.findById(req.params.id)
 
-        //si exite el proyecto
-        if(!proyecto){
-            return res.status(404).json({msg: 'Proyecto no encontrado'})
+        //si exite el personaje
+        if(!personaje){
+            return res.status(404).json({msg: 'personaje no encontrado'})
         }
-        
-        //verificar el creador
-        if(proyecto.creador.toString() !== req.usuario.id){
-            return res.status(401).json({msg: 'Update no autorizado'})
-        }
-     
+             
         //Actualizar
-        proyecto = await Proyecto.findByIdAndUpdate(
+        personaje = await Personaje.findByIdAndUpdate(
             {_id: req.params.id},
-            {$set : nuevoProyecto},
+            {$set : nuevoPersonaje},
             { new: true})
-        res.json({proyecto})
+        
+        res.json({personaje})
 
     } catch (error) {
         res.status(500).send('error en el servidor update')
@@ -111,27 +114,25 @@ exports.actualizarProyecto = async(req,res) => {
 
 }
 
-//Eliminar un proyecto
-exports.eliminarProyecto = async (req,res) => {
+//Eliminar un personaje
+exports.eliminarPersonaje = async (req,res) => {
+    
     try {
         //Revisar el id
-        let proyecto = await Proyecto.findById(req.params.id)
+        let personaje = await Personaje.findById(req.params.id)
 
-        //si exite el proyecto
-        if(!proyecto){
-            return res.status(404).json({msg: 'Proyecto no encontrado'})
+        //si exite el personaje
+        if(!personaje){
+            return res.status(404).json({msg: 'personaje no encontrado'})
         }
         
-        //verificar el creador
-        if(proyecto.creador.toString() !== req.usuario.id){
-            return res.status(401).json({msg: 'Update no autorizado'})
-        }
-        //Eliminar el proyecto
-        await Proyecto.findOneAndRemove({_id: req.params.id})
-        res.json({msg: 'Proyecto eliminado'})
+
+        //Eliminar el personaje
+        await Personaje.findOneAndRemove({_id: req.params.id})
+        res.json({msg: 'personaje eliminado'})
 
     } catch (error) {
-        res.status(500).send('Error en el servidor')
+        res.status(500).send('Error en el servidor intentando eliminar el mensaje')
     }
 
 }

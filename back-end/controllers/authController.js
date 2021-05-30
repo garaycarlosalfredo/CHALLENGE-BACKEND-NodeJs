@@ -42,7 +42,7 @@ exports.autenticarUsuario = async (req,res)=>{
                 if(error)throw error
 
                 //mensaje de confirmación
-                console.log("Usuario creado correctamente")
+                console.log("Usuario logeado correctamente")
                 return res.json({token})
 
             }
